@@ -1,0 +1,39 @@
+/* .ToggleButton{
+    background-color: white;
+    padding: 8px;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+.ToggleButton img {
+    height: 100%;
+}
+@media (min-width: 500px){
+    .ToggleButton{
+        display: none;
+    }
+} */
+
+.ToggleButton {
+    width: 40px;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.ToggleButton div {
+    width: 90%;
+    height: 3px;
+    background-color: white;
+}
+
+@media (min-width: 500px) {
+    .ToggleButton {
+        display: none;
+    }
+}
