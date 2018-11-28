@@ -4,6 +4,8 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 
+import axios from "../../axios-orders"
+
 const INGREDIENT_PRICES = {
   salad: 0.5,
   cheese: 0.4,
@@ -83,7 +85,8 @@ export default class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    alert("dO coNTINUE");
+    // alert("dO coNTINUE");
+    axios.post("/orders.json");
   }
 
   render() {
