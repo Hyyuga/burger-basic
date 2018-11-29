@@ -1,19 +1,22 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import classes from "./Modal.module.css";
 import Backdrop from "../Backdrop/Backdrop"
 
-const modal = (props) => (
-        <>
-            <Backdrop clicked={props.modalClosed} show={props.show} />
+class Modal extends PureComponent {
+    render () {
+        return (
+            <>
+            <Backdrop clicked={this.props.modalClosed} show={this.props.show} />
             <div 
                 className={classes.Modal}
                 style={{
-                    transform: props.show ? "translateY(0)" : "translateY(-100vh)",
-                    opacity: props.show ? "1" : "0"
+                    transform: this.props.show ? "translateY(0)" : "translateY(-100vh)",
+                    opacity: this.props.show ? "1" : "0"
                 }}>
-                {props.children}
+                {this.props.children}
             </div>
         </>   
-)
-
-export default modal;
+        )
+    }
+}
+export default Modal;
