@@ -8,13 +8,9 @@ const INGREDIENT_PRICES = {
   }
 
 const initialState = {
-    ingredients: {
-        salad: 0,
-        meat: 0,
-        cheese: 0,
-        bacon: 0
-    },
-    totalPrice: 4
+    ingredients: null,
+    totalPrice: 4,
+    error: false
 }
 
 export default (state = initialState, action) => {
@@ -37,7 +33,18 @@ export default (state = initialState, action) => {
             [action.ingredient]: state.ingredients[action.ingredient] - 1
         },
         totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredient]
-};
+    };
+    case actionTypes.SET_INGREDIENTS:
+        return {
+            ...state,
+            ingredients: action.ingredients,
+            error: false
+        }
+    case actionTypes.FETCH_INGREDIENTS_FAILED:
+        return {
+            ...state,
+            error: true
+        }
   default:
     return state
   }
