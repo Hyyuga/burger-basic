@@ -5,6 +5,8 @@ import classes from "./ContactData.module.css";
 import Spinner from "../../../components/UI/Spinner/Spinner"
 import  axios from "../../../axios-orders";
 import Input from "../../../components/UI/Input/Input";
+import * as actionCreators from "../../../store/actions/index";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler"
 
 export class CheckoutData extends Component {
   state = {
@@ -82,13 +84,12 @@ export class CheckoutData extends Component {
           options: [{value: "fastest", displayValue: "Fastest"},
                     {value: "cheapest", displayValue: "Cheapest"}]
         },
-        value: "",
+        value: "fastest",
         validation: {},
         valid: false,
         touched: false
       },
     },
-    loading: false,
     formIsValid: false
   }
 
@@ -116,8 +117,6 @@ export class CheckoutData extends Component {
 
   orderClickedHandler = (event)  => {
     event.preventDefault();
-    this.setState({loading: true});
-
     const formData = {};
 
     for(let formElementIdentifier in this.state.orderForm){
@@ -129,13 +128,10 @@ export class CheckoutData extends Component {
       price: this.props.totPrice,
       orderData: formData
     }
-    axios.post("/orders.json", order)
-      .then(response => {
-        this.setState({loading: false});
-        console.log(this.props);
-        this.props.history.push("/burger-builder");
-      })
-      .catch(error => this.setState({loading: false}));
+    console.log("ings", this.props.ingr);
+    console.log("price", this.props.totPrice);
+    
+   this.props.onSubmitOrder(order);
   }
   
   inputChangedHandler = (inputIdentifier, event)=> {
@@ -190,7 +186,7 @@ export class CheckoutData extends Component {
       </form>
     );
 
-    if(this.state.loading){
+    if(this.props.isLoading){
       form = <Spinner />;
     }
 
@@ -205,9 +201,15 @@ export class CheckoutData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingr: state.ingredients,
-    totPrice: state.totalPrice
+    ingr: state.burgerBuilder.ingredients,
+    totPrice: state.burgerBuilder.totalPrice,
+    load: state.burgerBuilder.isLoading
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmitOrder: (order) => dispatch(actionCreators.orderSubmit(order))
   }
 }
 
-export default connect(mapStateToProps)(CheckoutData)
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(CheckoutData, axios))
