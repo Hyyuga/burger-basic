@@ -4,6 +4,8 @@ import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import {Route, Redirect, Switch} from "react-router-dom"
 import Checkout from './containers/Checkout/Checkout';
 import Orders from "./containers/Orders/Orders";
+import Auth from "./containers/Auth/Auth"
+
 
 class App extends Component {
   render() {
@@ -14,6 +16,7 @@ class App extends Component {
           <Route path="/burger-builder" component={BurgerBuilder}/>
           <Route path="/checkout" component={Checkout}/>
           <Route path="/orders" component={Orders}/>
+          <Route path="/auth" component={Auth}/>
           <Redirect from="/" to ="/burger-builder"/>
           <Route render={() => <h1>NOT FOUND</h1>}/>
         </Switch>
